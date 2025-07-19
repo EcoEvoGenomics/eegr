@@ -1,0 +1,18 @@
+Package: eegr
+Title: EcoEvoGenomics R Package
+Version: 0.0.1
+Authors@R: 
+    person("Erik Sandertun", "Roeed", , "e.s.roed@ibv.uio.no", role = c("aut", "cre"))
+Description: A collection of useful R utilities for parsing and plotting eco-evolutionary genomics results.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends:
+    R (>= 4.1.0),
+    R6,
+    dplyr,
+    readr,
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
