@@ -16,7 +16,7 @@
 #'
 #' @return A vector of hexadecimal colour codes.
 #'
-#' @import colorspace
+#' @importFrom colorspace darken
 #'
 #' @export
 #'

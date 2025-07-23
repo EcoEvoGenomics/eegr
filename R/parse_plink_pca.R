@@ -6,9 +6,9 @@
 #'
 #' @returns An object of class plink_pca_parser
 #'
-#' @import R6
-#' @import readr
-#' @import dplyr
+#' @importFrom R6 R6Class
+#' @importFrom readr read_table
+#' @importFrom dplyr as_tibble
 #'
 #' @export
 #'
