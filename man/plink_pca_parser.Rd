@@ -30,7 +30,7 @@ Initialize by importing data from eigenvec and eigencval files}
 \if{latex}{\out{\hypertarget{method-PLINK PCA Parser-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{plink_pca_parser$new(eigenval_path, eigenvec_path, id_name = "ID")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{plink_pca_parser$new(eigenval_path, eigenvec_path)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -38,9 +38,7 @@ Initialize by importing data from eigenvec and eigencval files}
 \describe{
 \item{\code{eigenval_path}}{Path to PLINK output with .eigenval extension}
 
-\item{\code{eigenvec_path}}{Path to PLINK output with .eigenvec extension}
-
-\item{\code{id_name}}{Name to use for sample ID column in output
+\item{\code{eigenvec_path}}{Path to PLINK output with .eigenvec extension
 
 Get variance explained by each principal component}
 }

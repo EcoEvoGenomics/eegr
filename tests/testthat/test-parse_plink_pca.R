@@ -3,24 +3,24 @@ eigenvec <- "../testdata/parse_plink_pca/test.eigenvec"
 
 test_that("Can instantiate new plink_pca_parser object without error", {
   expect_no_error({
-    inst <- parse_plink_pca(eigenval, eigenvec, "TestID")
+    inst <- parse_plink_pca(eigenval, eigenvec)
   })
 })
 
 test_that("Can instantiate new plink_pca_parser object without warning", {
   expect_no_warning({
-    inst <- parse_plink_pca(eigenval, eigenvec, "TestID")
+    inst <- parse_plink_pca(eigenval, eigenvec)
   })
 })
 
 test_that("Can instantiate new plink_pca_parser object without message", {
   expect_no_message({
-    inst <- parse_plink_pca(eigenval, eigenvec, "TestID")
+    inst <- parse_plink_pca(eigenval, eigenvec)
   })
 })
 
 test_that("Eigenvalues are loaded correctly", {
-  inst <- parse_plink_pca(eigenval, eigenvec, "TestID")
+  inst <- parse_plink_pca(eigenval, eigenvec)
   priv <- inst$.__enclos_env__$private
 
   # Expect same properties as in ../testdata/test.eigenval
@@ -28,13 +28,13 @@ test_that("Eigenvalues are loaded correctly", {
 })
 
 test_that("Eigenvectors are loaded correctly", {
-  inst <- parse_plink_pca(eigenval, eigenvec, "TestID")
+  inst <- parse_plink_pca(eigenval, eigenvec)
   priv <- inst$.__enclos_env__$private
 
   # Expect properties accord with input file and user input
   expect_equal(
     colnames(priv$eigenvectors),
-    c("TestID", "PC1", "PC2", "PC3")
+    c("ID", "PC1", "PC2", "PC3")
   )
   expect_in(
     class(priv$eigenvectors),
@@ -51,21 +51,21 @@ test_that("Eigenvectors are loaded correctly", {
 })
 
 test_that("Method get_coordinates returns expected output", {
-  inst <- parse_plink_pca(eigenval, eigenvec, "TestID")
+  inst <- parse_plink_pca(eigenval, eigenvec)
   priv <- inst$.__enclos_env__$private
 
   expect_equal(
     inst$get_coordinates(pc = c(1)),
-    priv$eigenvectors[c("TestID", "PC1")]
+    priv$eigenvectors[c("ID", "PC1")]
   )
   expect_equal(
     inst$get_coordinates(pc = c(1, 2)),
-    priv$eigenvectors[c("TestID", "PC1", "PC2")]
+    priv$eigenvectors[c("ID", "PC1", "PC2")]
   )
 })
 
 test_that("Method get_variance_explained returns expected output", {
-  inst <- parse_plink_pca(eigenval, eigenvec, "TestID")
+  inst <- parse_plink_pca(eigenval, eigenvec)
 
   expect_equal(
     inst$get_variance_explained(pc = c(1, 2, 3), as_percent = FALSE),
@@ -79,12 +79,12 @@ test_that("Method get_variance_explained returns expected output", {
 })
 
 test_that("Active field sample_ids returns expected output", {
-  inst <- parse_plink_pca(eigenval, eigenvec, "TestID")
+  inst <- parse_plink_pca(eigenval, eigenvec)
   expect_equal(inst$sample_ids, paste("Sample", 1 : 6, sep = ""))
 })
 
 test_that("Function returns identical output as direct instantiation", {
-  inst_function <- parse_plink_pca(eigenval, eigenvec, "TestID")
-  inst_direct <- plink_pca_parser$new(eigenval, eigenvec, "TestID")
+  inst_function <- parse_plink_pca(eigenval, eigenvec)
+  inst_direct <- plink_pca_parser$new(eigenval, eigenvec)
   expect_equal(inst_function, inst_direct)
 })

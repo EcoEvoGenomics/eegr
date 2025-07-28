@@ -4,14 +4,12 @@
 \alias{parse_admixture}
 \title{Instantiate new ADMIXTURE parser}
 \usage{
-parse_admixture(admixture_dir, sample_ids, id_name = "ID")
+parse_admixture(admixture_dir, sample_ids)
 }
 \arguments{
 \item{admixture_dir}{Character singleton. Directory of Admixture output.}
 
 \item{sample_ids}{Character vector. The IDs of samples input to Admixture.}
-
-\item{id_name}{Character singleton. Column name of sample IDs (default "ID").}
 }
 \value{
 An object of class admixture_parser

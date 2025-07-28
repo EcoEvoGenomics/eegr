@@ -2,7 +2,6 @@
 #'
 #' @param admixture_dir Character singleton. Directory of Admixture output.
 #' @param sample_ids Character vector. The IDs of samples input to Admixture.
-#' @param id_name Character singleton. Column name of sample IDs (default "ID").
 #'
 #' @returns An object of class admixture_parser
 #'
@@ -13,8 +12,8 @@
 #'
 #' @export
 #'
-parse_admixture <- function(admixture_dir, sample_ids, id_name = "ID") {
-  admixture_parser$new(admixture_dir, sample_ids, id_name)
+parse_admixture <- function(admixture_dir, sample_ids) {
+  admixture_parser$new(admixture_dir, sample_ids)
 }
 
 #' Class for ADMIXTURE parsers
@@ -35,12 +34,10 @@ admixture_parser <- R6::R6Class(
     #'
     #' @param admixture_dir Character singleton. Directory of Admixture output.
     #' @param sample_ids Character vector. IDs of samples input to Admixture.
-    #' @param id_name Character singleton. Colname of sample IDs (default "ID").
     #'
-    initialize = function(admixture_dir, sample_ids, id_name = "ID") {
+    initialize = function(admixture_dir, sample_ids) {
       private$directory <- admixture_dir
       private$sample_ids <- sample_ids
-      private$id_name <- id_name
     },
 
     #' Get membership assignments at a value of K
@@ -82,7 +79,6 @@ admixture_parser <- R6::R6Class(
   private = list(
     directory = NULL,
     sample_ids = NULL,
-    id_name = NULL,
 
     # Identify and list Admixture output files in private$directory
     #
@@ -159,7 +155,7 @@ admixture_parser <- R6::R6Class(
     parse_qfile = function(qfile) {
       assignments <- read.table(qfile)
       identified_assignments <- cbind(private$sample_ids, assignments)
-      colnames(identified_assignments)[1] <- private$id_name
+      colnames(identified_assignments)[1] <- "ID"
       dplyr::as_tibble(identified_assignments)
     }
   )

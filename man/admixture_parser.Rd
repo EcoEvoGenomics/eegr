@@ -34,7 +34,7 @@ results from an ADMIXTURE analysis.
 \if{latex}{\out{\hypertarget{method-Admixture Parser-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{admixture_parser$new(admixture_dir, sample_ids, id_name = "ID")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{admixture_parser$new(admixture_dir, sample_ids)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -42,9 +42,7 @@ results from an ADMIXTURE analysis.
 \describe{
 \item{\code{admixture_dir}}{Character singleton. Directory of Admixture output.}
 
-\item{\code{sample_ids}}{Character vector. IDs of samples input to Admixture.}
-
-\item{\code{id_name}}{Character singleton. Colname of sample IDs (default "ID").
+\item{\code{sample_ids}}{Character vector. IDs of samples input to Admixture.
 
 Get membership assignments at a value of K}
 }

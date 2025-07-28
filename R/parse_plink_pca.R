@@ -2,7 +2,6 @@
 #'
 #' @param eigenval_path Path to PLINK output with .eigenval extension
 #' @param eigenvec_path Path to PLINK output with .eigenvec extension
-#' @param id_name Name to use for sample ID column in output
 #'
 #' @returns An object of class plink_pca_parser
 #'
@@ -12,8 +11,8 @@
 #'
 #' @export
 #'
-parse_plink_pca <- function(eigenval_path, eigenvec_path, id_name = "ID") {
-  plink_pca_parser$new(eigenval_path, eigenvec_path, id_name)
+parse_plink_pca <- function(eigenval_path, eigenvec_path) {
+  plink_pca_parser$new(eigenval_path, eigenvec_path)
 }
 
 #' Class for PLINK PCA parsers
@@ -32,12 +31,11 @@ plink_pca_parser <- R6::R6Class(
     #'
     #' @param eigenval_path Path to PLINK output with .eigenval extension
     #' @param eigenvec_path Path to PLINK output with .eigenvec extension
-    #' @param id_name Name to use for sample ID column in output
     #'
-    initialize = function(eigenval_path, eigenvec_path, id_name = "ID") {
+    initialize = function(eigenval_path, eigenvec_path) {
       private$eigenvalues <- private$load_eigenvalues(eigenval_path)
       private$eigenvectors <- private$load_eigenvectors(eigenvec_path) |>
-        private$parse_eigenvectors(id_name)
+        private$parse_eigenvectors()
     },
 
     #' Get variance explained by each principal component
@@ -103,13 +101,12 @@ plink_pca_parser <- R6::R6Class(
     #
     # @param eigenvectors A tibble of sample and family IDs and principal
     # component coordinates
-    # @param id_name Name to assign sample ID column
     #
     # @returns The input tibble, parsed. The family ID column is removed,
-    # the sample ID column renamed, and the principal component coordinate
+    # the sample ID column renamed "ID", and the principal component coordinate
     # columns renamed as "PC1", "PC2", etc.
     #
-    parse_eigenvectors = function(eigenvectors, id_name) {
+    parse_eigenvectors = function(eigenvectors) {
       id_index <- 1
       family_id_index <- 2
 
@@ -117,7 +114,7 @@ plink_pca_parser <- R6::R6Class(
       pc_count <- ncol(eigenvectors[-id_index])
       pc_columns <- seq(from = id_index, to = pc_count) + 1
       pc_names <- paste("PC", seq(pc_count), sep = "")
-      names(eigenvectors)[id_index] <- id_name
+      names(eigenvectors)[id_index] <- "ID"
       names(eigenvectors)[pc_columns] <- pc_names
 
       return(eigenvectors)
