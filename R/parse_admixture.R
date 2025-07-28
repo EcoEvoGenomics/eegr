@@ -2,7 +2,7 @@
 #'
 #' @param admixture_dir Character singleton. Directory of Admixture output.
 #' @param sample_ids Character vector. The IDs of samples input to Admixture.
-#' @param id_name Character singleton. Column name of sample IDs (default "ID").
+#' @param popmap_path Path to .tsv with headerless columns for ID and pop
 #'
 #' @returns An object of class admixture_parser
 #'
@@ -13,8 +13,8 @@
 #'
 #' @export
 #'
-parse_admixture <- function(admixture_dir, sample_ids, id_name = "ID") {
-  admixture_parser$new(admixture_dir, sample_ids, id_name)
+parse_admixture <- function(admixture_dir, sample_ids, popmap_path) {
+  admixture_parser$new(admixture_dir, sample_ids, popmap_path)
 }
 
 #' Class for ADMIXTURE parsers
@@ -29,24 +29,24 @@ parse_admixture <- function(admixture_dir, sample_ids, id_name = "ID") {
 #'
 admixture_parser <- R6::R6Class(
   classname = "Admixture Parser",
+  inherit = popgen_parser,
   public = list(
 
     # Initialize by taking information about ADMIXTURE run
-    #'
+    #
     #' @param admixture_dir Character singleton. Directory of Admixture output.
     #' @param sample_ids Character vector. IDs of samples input to Admixture.
-    #' @param id_name Character singleton. Colname of sample IDs (default "ID").
+    #' @param popmap_path Path to .tsv with headerless columns for ID and pop
     #'
-    initialize = function(admixture_dir, sample_ids, id_name = "ID") {
+    initialize = function(admixture_dir, sample_ids, popmap_path) {
       private$directory <- admixture_dir
-      private$sample_ids <- sample_ids
-      private$id_name <- id_name
+      private$samples <- sample_ids
+      private$popmap <- super$load_popmap(popmap_path)
     },
 
-    #' Get membership assignments at a value of K
-    #'
+    # Get membership assignments at a value of K
+    #
     #' @param k Integer singleton. Value of K.
-    #'
     #' @returns A dplyr tibble.
     #'
     get_assignments = function(k = self$k_min_error) {
@@ -54,35 +54,18 @@ admixture_parser <- R6::R6Class(
     }
   ),
   active = list(
-
-    # Get K with least CV error in Admixture output
-    #
-    # @returns An integer singleton.
-    #
     k_min_error = function() {
       self$k_values[which.min(self$cv_errors)]
     },
-
-    # Get all tried values of K in Admixture output
-    #
-    # @returns An integer vector.
-    #
     k_values = function() {
       vapply(private$parse_outfiles(), function(x) x$k, integer(1))
     },
-
-    # Get CV errors for each value of K in Admixture output
-    #
-    # @returns A floating point vector.
-    #
     cv_errors = function() {
       vapply(private$parse_outfiles(), function(x) x$cv_error, double(1))
     }
   ),
   private = list(
     directory = NULL,
-    sample_ids = NULL,
-    id_name = NULL,
 
     # Identify and list Admixture output files in private$directory
     #
@@ -158,8 +141,8 @@ admixture_parser <- R6::R6Class(
     #
     parse_qfile = function(qfile) {
       assignments <- read.table(qfile)
-      identified_assignments <- cbind(private$sample_ids, assignments)
-      colnames(identified_assignments)[1] <- private$id_name
+      identified_assignments <- cbind(private$samples, assignments)
+      colnames(identified_assignments)[1] <- "ID"
       dplyr::as_tibble(identified_assignments)
     }
   )
