@@ -10,6 +10,9 @@ A dplyr tibble.
 An object of class admixture_parser helps you easily parse
 results from an ADMIXTURE analysis.
 }
+\section{Super class}{
+\code{eegr::POPGEN Parser} -> \code{Admixture Parser}
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -34,7 +37,7 @@ results from an ADMIXTURE analysis.
 \if{latex}{\out{\hypertarget{method-Admixture Parser-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{admixture_parser$new(admixture_dir, sample_ids)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{admixture_parser$new(admixture_dir, sample_ids, popmap_path)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -42,9 +45,9 @@ results from an ADMIXTURE analysis.
 \describe{
 \item{\code{admixture_dir}}{Character singleton. Directory of Admixture output.}
 
-\item{\code{sample_ids}}{Character vector. IDs of samples input to Admixture.
+\item{\code{sample_ids}}{Character vector. IDs of samples input to Admixture.}
 
-Get membership assignments at a value of K}
+\item{\code{popmap_path}}{Path to .tsv with headerless columns for ID and pop}
 }
 \if{html}{\out{</div>}}
 }

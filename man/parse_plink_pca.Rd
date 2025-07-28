@@ -4,12 +4,14 @@
 \alias{parse_plink_pca}
 \title{Instantiate new PLINK PCA parser}
 \usage{
-parse_plink_pca(eigenval_path, eigenvec_path)
+parse_plink_pca(eigenval_path, eigenvec_path, popmap_path)
 }
 \arguments{
 \item{eigenval_path}{Path to PLINK output with .eigenval extension}
 
 \item{eigenvec_path}{Path to PLINK output with .eigenvec extension}
+
+\item{popmap_path}{Path to .tsv with headerless columns for ID and pop}
 }
 \value{
 An object of class plink_pca_parser

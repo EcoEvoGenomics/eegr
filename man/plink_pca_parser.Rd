@@ -7,14 +7,8 @@
 An object of class plink_pca_parser helps you easily parse
 results from a PLINK PCA.
 }
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{sample_ids}}{A vector of sample IDs.
-
-Initialize by importing data from eigenvec and eigencval files}
-}
-\if{html}{\out{</div>}}
+\section{Super class}{
+\code{eegr::POPGEN Parser} -> \code{PLINK PCA Parser}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -30,7 +24,7 @@ Initialize by importing data from eigenvec and eigencval files}
 \if{latex}{\out{\hypertarget{method-PLINK PCA Parser-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{plink_pca_parser$new(eigenval_path, eigenvec_path)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{plink_pca_parser$new(eigenval_path, eigenvec_path, popmap_path)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -38,9 +32,9 @@ Initialize by importing data from eigenvec and eigencval files}
 \describe{
 \item{\code{eigenval_path}}{Path to PLINK output with .eigenval extension}
 
-\item{\code{eigenvec_path}}{Path to PLINK output with .eigenvec extension
+\item{\code{eigenvec_path}}{Path to PLINK output with .eigenvec extension}
 
-Get variance explained by each principal component}
+\item{\code{popmap_path}}{Path to .tsv with headerless columns for ID and pop}
 }
 \if{html}{\out{</div>}}
 }
@@ -60,9 +54,7 @@ Get variance explained by each principal component}
 
 \item{\code{signif}}{Number of significant figures}
 
-\item{\code{as_percent}}{Logical. Return as percent (default) or fraction?
-
-Get coordinates of samples on the principal components}
+\item{\code{as_percent}}{Logical. Return as percent (default) or fraction?}
 }
 \if{html}{\out{</div>}}
 }
@@ -72,13 +64,15 @@ Get coordinates of samples on the principal components}
 \if{latex}{\out{\hypertarget{method-PLINK PCA Parser-get_coordinates}{}}}
 \subsection{Method \code{get_coordinates()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{plink_pca_parser$get_coordinates(pc = c(1, 2))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{plink_pca_parser$get_coordinates(pc = c(1, 2), include_pops = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{pc}}{Vector of which principal components to return}
+
+\item{\code{include_pops}}{Include sample population in output table}
 }
 \if{html}{\out{</div>}}
 }
