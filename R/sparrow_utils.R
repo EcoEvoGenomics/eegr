@@ -23,7 +23,7 @@
 get_sparrow_colours <- function(species = c("PDOM"), accents = c(0)) {
   pal <- data.frame(
     species = c("PDOM", "PMON", "PHIS", "PITA"),
-    colour = c("#1E90FF", "#008B00", "#8B0000", "#FFD700")
+    colour = c("#0F9ED5", "#4EA72E", "#8B0000", "#FFD700")
   )
 
   stopifnot(length(species) == length(accents))
