@@ -16,6 +16,7 @@ results from a PLINK PCA.
 \item \href{#method-PLINK PCA Parser-new}{\code{plink_pca_parser$new()}}
 \item \href{#method-PLINK PCA Parser-get_variance_explained}{\code{plink_pca_parser$get_variance_explained()}}
 \item \href{#method-PLINK PCA Parser-get_coordinates}{\code{plink_pca_parser$get_coordinates()}}
+\item \href{#method-PLINK PCA Parser-plot}{\code{plink_pca_parser$plot()}}
 \item \href{#method-PLINK PCA Parser-clone}{\code{plink_pca_parser$clone()}}
 }
 }
@@ -73,6 +74,24 @@ results from a PLINK PCA.
 \item{\code{pc}}{Vector of which principal components to return}
 
 \item{\code{include_pops}}{Include sample population in output table}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PLINK PCA Parser-plot"></a>}}
+\if{latex}{\out{\hypertarget{method-PLINK PCA Parser-plot}{}}}
+\subsection{Method \code{plot()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{plink_pca_parser$plot(pc = c(1, 2), label_pops = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{pc}}{Vector of which principal components to plot}
+
+\item{\code{label_pops}}{Label populations on plot}
 }
 \if{html}{\out{</div>}}
 }

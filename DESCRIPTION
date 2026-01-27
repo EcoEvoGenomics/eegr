@@ -7,15 +7,15 @@ Description: A collection of useful R utilities for parsing and plotting eco-evo
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends:
     R (>= 4.1.0),
     R6 (>= 2.6.0),
     plyr (>= 1.8.0),
-    dplyr (>= 1.1.0),
-    readr (>= 2.1.0),
     stringr (>= 1.5.0),
-    colorspace (>= 2.1)
+    tidyverse (>= 2.0.0),
+    colorspace (>= 2.1),
+    ggrepel (>= 0.9.6)
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

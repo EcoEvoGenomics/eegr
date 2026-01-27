@@ -9,7 +9,7 @@
 #' @importFrom R6 R6Class
 #' @importFrom stringr str_locate
 #' @importFrom stringr str_sub
-#' @importFrom dplyr as_tibble
+#' @import tidyverse
 #'
 #' @export
 #'
