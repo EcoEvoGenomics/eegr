@@ -31,7 +31,7 @@ get_sparrow_colours <- function(species = c("PDOM"), accents = c(0)) {
   stopifnot(all(accents <= 1 & accents >= -1))
 
   colours <- sapply(species, function(x) pal$colour[match(x, pal$species)])
-  for (i in seq_len(length(colours))) {
+  for (i in seq_along(colours)) {
     colours[i] <- colorspace::darken(colours[i], accents[i])
   }
 
