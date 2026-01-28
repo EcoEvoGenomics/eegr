@@ -51,6 +51,81 @@ admixture_parser <- R6::R6Class(
     #'
     get_assignments = function(k = self$k_min_error) {
       private$parse_qfile(private$get_admixture_files(k = k)$qfiles)
+    },
+
+    # Plot bar plot
+    #
+    #' @param k Integer singleton. Value of K.
+    #' @param sort_samples Logical. Sort samples by V1? Default TRUE.
+    #' @param cluster_cols Vector of colours for the assigned clusters.
+    #' @returns A ggplot plot object.
+    #'
+    plot = function(k = self$k_min_error, sort_samples = TRUE, cluster_cols) {
+
+      stopifnot(length(cluster_cols) == k)
+
+      assig <- self$get_assignments(k)
+      assig$POP <- self$sample_pops
+
+      if (sort_samples) {
+        assig <- assig |>
+          arrange(V1) |>
+          mutate(ID = factor(ID, levels = as.character(ID)))
+      }
+
+      mix_plot <- assig |>
+        pivot_longer(cols = contains("V")) |>
+        ggplot(aes(x = ID, y = value, fill = name)) +
+        coord_cartesian(expand = FALSE, clip = FALSE) +
+        geom_col(width = 1, show.legend = FALSE) +
+        facet_wrap(
+          vars(POP),
+          space = "free_x",
+          scale  = "free_x",
+          strip.position = "bottom"
+        ) +
+        scale_fill_manual(values = cluster_cols) +
+        theme_minimal() +
+        theme(
+          strip.text = element_text(size = 4, colour = "grey25"),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          axis.title = element_blank(),
+          plot.margin = unit(c(0, 0, 0, 0), units = "mm")
+        )
+    },
+
+    # Plot CV errors across K
+    #
+    #' @returns A ggplot plot object.
+    #'
+    plot_cv_error = function() {
+      errors <- data.frame(ERR = self$cv_errors, K = self$k_values)
+      errors |>
+        ggplot(aes(x = K, y = ERR)) +
+        coord_cartesian(expand = FALSE, clip = FALSE) +
+        geom_line(colour = "grey25", lineend = "round") +
+        annotate(
+          "text", label = "CV Error",
+          x = max(errors$K), y = errors$ERR[which(errors$K == max(errors$K))],
+          hjust = -0.1, vjust = 0.5,
+          colour = "grey25", size = 1.5
+        ) +
+        xlab("Value of K") +
+        theme(
+          axis.text = element_text(size = 4, colour = "grey75"),
+          axis.ticks = element_blank(),
+          axis.title.y = element_blank(),
+          axis.title.x = element_text(size = 4, colour = "grey75"),
+          panel.background = element_blank(),
+          panel.grid.major.x = element_blank(),
+          panel.grid.major.y = element_line(
+            colour = "grey90",
+            linewidth = 0.15
+          ),
+          panel.grid.minor = element_blank(),
+          plot.margin = unit(c(0, 0, 0, 0), units = "mm")
+        )
     }
   ),
   active = list(
