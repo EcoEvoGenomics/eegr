@@ -82,8 +82,8 @@ admixture_parser <- R6::R6Class(
         k <- "*"
       }
 
-      outsuffix <- paste(k, ".out", sep = "")
-      qsuffix <- paste(k, ".Q", sep = "")
+      outsuffix <- paste(k, "\\.out", sep = "")
+      qsuffix <- paste(k, "\\.Q", sep = "")
       outfiles <- dir(private$directory, pattern = outsuffix, full.names = TRUE)
       qfiles <- dir(private$directory, pattern = qsuffix, full.names = TRUE)
 
