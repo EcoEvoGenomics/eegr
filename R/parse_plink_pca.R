@@ -90,7 +90,7 @@ plink_pca_parser <- R6::R6Class(
         ggplot(aes(x = .data[[pcx]], y = .data[[pcy]], col = POP)) +
         coord_equal(
           xlim = c(xmin, xmax), ylim = c(ymin, ymax),
-          expand = FALSE, clip = FALSE
+          expand = FALSE, clip = "off"
         ) +
         geom_hline(yintercept = 0, colour = "grey90", linewidth = 0.15) +
         geom_vline(xintercept = 0, colour = "grey90", linewidth = 0.15) +

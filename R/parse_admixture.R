@@ -76,7 +76,7 @@ admixture_parser <- R6::R6Class(
       mix_plot <- assig |>
         pivot_longer(cols = contains("V")) |>
         ggplot(aes(x = ID, y = value, fill = name)) +
-        coord_cartesian(expand = FALSE, clip = FALSE) +
+        coord_cartesian(expand = FALSE, clip = "off") +
         geom_col(width = 1, show.legend = FALSE) +
         facet_wrap(
           vars(POP),
@@ -103,7 +103,7 @@ admixture_parser <- R6::R6Class(
       errors <- data.frame(ERR = self$cv_errors, K = self$k_values)
       errors |>
         ggplot(aes(x = K, y = ERR)) +
-        coord_cartesian(expand = FALSE, clip = FALSE) +
+        coord_cartesian(expand = FALSE, clip = "off") +
         geom_line(colour = "grey25", lineend = "round") +
         annotate(
           "text", label = "CV Error",
