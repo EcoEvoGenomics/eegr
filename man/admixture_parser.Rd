@@ -5,6 +5,10 @@
 \title{Class for ADMIXTURE parsers}
 \value{
 A dplyr tibble.
+
+A ggplot plot object.
+
+A ggplot plot object.
 }
 \description{
 An object of class admixture_parser helps you easily parse
@@ -29,6 +33,8 @@ results from an ADMIXTURE analysis.
 \itemize{
 \item \href{#method-Admixture Parser-new}{\code{admixture_parser$new()}}
 \item \href{#method-Admixture Parser-get_assignments}{\code{admixture_parser$get_assignments()}}
+\item \href{#method-Admixture Parser-plot}{\code{admixture_parser$plot()}}
+\item \href{#method-Admixture Parser-plot_cv_error}{\code{admixture_parser$plot_cv_error()}}
 \item \href{#method-Admixture Parser-clone}{\code{admixture_parser$clone()}}
 }
 }
@@ -67,6 +73,35 @@ results from an ADMIXTURE analysis.
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Admixture Parser-plot"></a>}}
+\if{latex}{\out{\hypertarget{method-Admixture Parser-plot}{}}}
+\subsection{Method \code{plot()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{admixture_parser$plot(k = self$k_min_error, sort_samples = TRUE, cluster_cols)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{k}}{Integer singleton. Value of K.}
+
+\item{\code{sort_samples}}{Logical. Sort samples by V1? Default TRUE.}
+
+\item{\code{cluster_cols}}{Vector of colours for the assigned clusters.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Admixture Parser-plot_cv_error"></a>}}
+\if{latex}{\out{\hypertarget{method-Admixture Parser-plot_cv_error}{}}}
+\subsection{Method \code{plot_cv_error()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{admixture_parser$plot_cv_error()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Admixture Parser-clone"></a>}}

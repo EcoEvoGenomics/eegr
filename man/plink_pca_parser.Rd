@@ -3,6 +3,9 @@
 \name{plink_pca_parser}
 \alias{plink_pca_parser}
 \title{Class for PLINK PCA parsers}
+\value{
+A ggplot object.
+}
 \description{
 An object of class plink_pca_parser helps you easily parse
 results from a PLINK PCA.
@@ -83,7 +86,12 @@ results from a PLINK PCA.
 \if{latex}{\out{\hypertarget{method-PLINK PCA Parser-plot}{}}}
 \subsection{Method \code{plot()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{plink_pca_parser$plot(pc = c(1, 2), label_pops = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{plink_pca_parser$plot(
+  pc = c(1, 2),
+  label_pops = TRUE,
+  pop_cols,
+  label_seed = 1
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -91,7 +99,11 @@ results from a PLINK PCA.
 \describe{
 \item{\code{pc}}{Vector of which principal components to plot}
 
-\item{\code{label_pops}}{Label populations on plot}
+\item{\code{label_pops}}{Logical. Label populations on plot? Default TRUE.}
+
+\item{\code{pop_cols}}{Vector of colours for each pop.}
+
+\item{\code{label_seed}}{Random seed for automatic placement of pop labels.}
 }
 \if{html}{\out{</div>}}
 }
