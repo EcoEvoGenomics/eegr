@@ -85,9 +85,12 @@ admixture_parser <- R6::R6Class(
           strip.position = "bottom"
         ) +
         scale_fill_manual(values = cluster_cols) +
-        theme_minimal() +
+        theme_void() +
         theme(
-          strip.text = element_text(size = 4, colour = "grey25"),
+          strip.text = element_text(
+            size = 4, colour = "grey25",
+            margin = margin(1, 0, 1, 0, unit = "mm")
+          ),
           axis.text = element_blank(),
           axis.ticks = element_blank(),
           axis.title = element_blank(),
