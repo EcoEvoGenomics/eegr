@@ -88,8 +88,11 @@ results from a PLINK PCA.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{plink_pca_parser$plot(
   pc = c(1, 2),
+  point_size = 2,
   label_pops = TRUE,
-  pop_cols,
+  pop_colours,
+  line_colour = "black",
+  label_colour = "black",
   label_seed = 1
 )}\if{html}{\out{</div>}}
 }
@@ -99,9 +102,15 @@ results from a PLINK PCA.
 \describe{
 \item{\code{pc}}{Vector of which principal components to plot}
 
+\item{\code{point_size}}{Double. Size factor for individual dots.}
+
 \item{\code{label_pops}}{Logical. Label populations on plot? Default TRUE.}
 
-\item{\code{pop_cols}}{Vector of colours for each pop.}
+\item{\code{pop_colours}}{Vector of colours for each pop.}
+
+\item{\code{line_colour}}{Singleton. Colour of lines and background elements.}
+
+\item{\code{label_colour}}{Singleton. Colour of population label text.}
 
 \item{\code{label_seed}}{Random seed for automatic placement of pop labels.}
 }

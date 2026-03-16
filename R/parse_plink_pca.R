@@ -69,69 +69,86 @@ plink_pca_parser <- R6::R6Class(
     # Plot coordinates of samples on the principal components
     #
     #' @param pc Vector of which principal components to plot
+    #' @param point_size Double. Size factor for individual dots.
     #' @param label_pops Logical. Label populations on plot? Default TRUE.
-    #' @param pop_cols Vector of colours for each pop.
+    #' @param pop_colours Vector of colours for each pop.
+    #' @param line_colour Singleton. Colour of lines and background elements.
+    #' @param label_colour Singleton. Colour of population label text.
     #' @param label_seed Random seed for automatic placement of pop labels.
     #' @returns A ggplot object.
     #'
-    plot = function(pc = c(1, 2), label_pops = TRUE, pop_cols, label_seed = 1) {
+    plot = function(
+      pc = c(1, 2),
+      point_size = 2,
+      label_pops = TRUE,
+      pop_colours,
+      line_colour = "black",
+      label_colour = "black",
+      label_seed = 1
+    ) {
 
       pcx <- paste("PC", pc[1], sep = "")
       pcy <- paste("PC", pc[2], sep = "")
       pcx_variance <- self$get_variance_explained(pc[1])
       pcy_variance <- self$get_variance_explained(pc[2])
 
-      xmax <- ceiling(max(self$get_coordinates(pc[1])[3]) * 10) / 10
-      xmin <-   floor(min(self$get_coordinates(pc[1])[3]) * 10) / 10
-      ymax <- ceiling(max(self$get_coordinates(pc[2])[3]) * 10) / 10
-      ymin <-   floor(min(self$get_coordinates(pc[2])[3]) * 10) / 10
+      expand <- 0.1
+      xmax <- (round(max(self$get_coordinates(pc[1])[3]) * 10) / 10) + expand
+      xmin <- (round(min(self$get_coordinates(pc[1])[3]) * 10) / 10) - expand
+      ymax <- (round(max(self$get_coordinates(pc[2])[3]) * 10) / 10) + expand
+      ymin <- (round(min(self$get_coordinates(pc[2])[3]) * 10) / 10) - expand
 
       pca_plot <- self$get_coordinates(pc = pc) |>
-        ggplot(aes(x = .data[[pcx]], y = .data[[pcy]], col = POP)) +
+        ggplot(aes(x = .data[[pcx]], y = .data[[pcy]], fill = POP)) +
         coord_equal(
           xlim = c(xmin, xmax), ylim = c(ymin, ymax),
           expand = FALSE, clip = "off"
         ) +
-        geom_hline(yintercept = 0, colour = "grey90", linewidth = 0.15) +
-        geom_vline(xintercept = 0, colour = "grey90", linewidth = 0.15) +
+        geom_hline(yintercept = 0, colour = line_colour, linewidth = 0.1) +
+        geom_vline(xintercept = 0, colour = line_colour, linewidth = 0.1) +
         annotate(
           "text", label = paste0(pcx, " (", pcx_variance, "%)"),
           x = xmax, y = (ymax - ymin) / 50,
           hjust = 1, vjust = 0,
-          colour = "grey75", size = 2
+          colour = line_colour, size = 1.75
         ) +
         annotate(
           "text", label = xmax,
           x = xmax, y = (ymax - ymin) / -50,
           hjust = 1, vjust = 1,
-          colour = "grey75", size = 2
+          colour = line_colour, size = 1.75
         ) +
         annotate(
           "text", label = xmin,
           x = xmin, y = (ymax - ymin) / -50,
           hjust = 0, vjust = 1,
-          colour = "grey75", size = 2
+          colour = line_colour, size = 1.75
         ) +
         annotate(
           "text", label = paste0(pcy, " (", pcy_variance, "%)"),
           x = (xmax - xmin) / 50, y = ymax,
           hjust = 0, vjust = 1,
-          colour = "grey75", size = 2
+          colour = line_colour, size = 1.75
         ) +
         annotate(
           "text", label = ymax,
           x = (xmax - xmin) / -50, y = ymax,
           hjust = 1, vjust = 1,
-          colour = "grey75", size = 2
+          colour = line_colour, size = 1.75
         ) +
         annotate(
           "text", label = ymin,
           x = (xmax - xmin) / -50, y = ymin,
           hjust = 1, vjust = 0,
-          colour = "grey75", size = 2
+          colour = line_colour, size = 1.75
         ) +
-        geom_point(size = 1) +
-        scale_colour_manual(values = pop_cols)
+        geom_point(
+          pch = 21,
+          size = point_size,
+          colour = "black",
+          stroke = 0.1
+        ) +
+        scale_fill_manual(values = pop_colours)
 
       if (label_pops) {
         pca_centroids <- self$get_coordinates(pc = pc) |>
@@ -144,11 +161,12 @@ plink_pca_parser <- R6::R6Class(
             data = pca_centroids,
             mapping = aes(x = x, y = y, label = POP),
             size = 2,
-            force_pull = 25,
-            colour = "grey25",
+            force_pull = 0,
+            force = 100,
+            colour = label_colour,
             seed = label_seed,
-            segment.size = 0.2,
-            min.segment.length = 1.5,
+            segment.size = 0.1,
+            min.segment.length = 0.25,
             inherit.aes = FALSE
           )
       }
