@@ -58,9 +58,10 @@ admixture_parser <- R6::R6Class(
     #' @param k Integer singleton. Value of K.
     #' @param sort_samples Logical. Sort samples by V1? Default TRUE.
     #' @param cluster_cols Vector of colours for the assigned clusters.
+    #' @param text_colour Colour of text labels.
     #' @returns A ggplot plot object.
     #'
-    plot = function(k = self$k_min_error, sort_samples = TRUE, cluster_cols) {
+    plot = function(k = self$k_min_error, sort_samples = TRUE, cluster_cols, text_colour = "black") {
 
       stopifnot(length(cluster_cols) == k)
 
@@ -88,7 +89,7 @@ admixture_parser <- R6::R6Class(
         theme_void() +
         theme(
           strip.text = element_text(
-            size = 4, colour = "grey25",
+            size = 4, colour = text_colour,
             margin = margin(1, 0, 1, 0, unit = "mm")
           ),
           axis.text = element_blank(),
@@ -100,34 +101,42 @@ admixture_parser <- R6::R6Class(
 
     # Plot CV errors across K
     #
+    #' @param text_colour Colour of text labels.
     #' @returns A ggplot plot object.
     #'
-    plot_cv_error = function() {
+    plot_cv_error = function(text_colour = "black", highlight_k = self$k_min_error) {
       errors <- data.frame(ERR = self$cv_errors, K = self$k_values)
       errors |>
         ggplot(aes(x = K, y = ERR)) +
         coord_cartesian(expand = FALSE, clip = "off") +
-        geom_line(colour = "grey25", lineend = "round") +
+        geom_line(colour = text_colour, lineend = "round") +
+        geom_label(
+          aes(
+            label = paste("K =", K),
+            colour = K == highlight_k
+          ),
+          size = 1.5,
+          border.colour = NA,
+          show.legend = FALSE
+        ) +
         annotate(
           "text", label = "CV Error",
           x = max(errors$K), y = errors$ERR[which(errors$K == max(errors$K))],
-          hjust = -0.1, vjust = 0.5,
-          colour = "grey25", size = 1.5
+          hjust = -0.5, vjust = 0.5,
+          colour = text_colour, size = 1.5
         ) +
         xlab("Value of K") +
+        scale_colour_manual(values = c(text_colour, "red")) +
         theme(
-          axis.text = element_text(size = 4, colour = "grey75"),
+          axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 4, colour = text_colour),
           axis.ticks = element_blank(),
-          axis.title.y = element_blank(),
-          axis.title.x = element_text(size = 4, colour = "grey75"),
+          axis.title = element_blank(),
           panel.background = element_blank(),
           panel.grid.major.x = element_blank(),
-          panel.grid.major.y = element_line(
-            colour = "grey90",
-            linewidth = 0.15
-          ),
+          panel.grid.major.y = element_line(linewidth = 0.15, colour = "grey75"),
           panel.grid.minor = element_blank(),
-          plot.margin = unit(c(0, 0, 0, 0), units = "mm")
+          plot.margin = unit(c(0.5, 1.5, 0.5, 0.5), "lines")
         )
     }
   ),

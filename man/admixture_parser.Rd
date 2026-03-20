@@ -79,7 +79,12 @@ results from an ADMIXTURE analysis.
 \if{latex}{\out{\hypertarget{method-Admixture Parser-plot}{}}}
 \subsection{Method \code{plot()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{admixture_parser$plot(k = self$k_min_error, sort_samples = TRUE, cluster_cols)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{admixture_parser$plot(
+  k = self$k_min_error,
+  sort_samples = TRUE,
+  cluster_cols,
+  text_colour = "black"
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -90,6 +95,8 @@ results from an ADMIXTURE analysis.
 \item{\code{sort_samples}}{Logical. Sort samples by V1? Default TRUE.}
 
 \item{\code{cluster_cols}}{Vector of colours for the assigned clusters.}
+
+\item{\code{text_colour}}{Colour of text labels.}
 }
 \if{html}{\out{</div>}}
 }
@@ -99,9 +106,19 @@ results from an ADMIXTURE analysis.
 \if{latex}{\out{\hypertarget{method-Admixture Parser-plot_cv_error}{}}}
 \subsection{Method \code{plot_cv_error()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{admixture_parser$plot_cv_error()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{admixture_parser$plot_cv_error(
+  text_colour = "black",
+  highlight_k = self$k_min_error
+)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{text_colour}}{Colour of text labels.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Admixture Parser-clone"></a>}}
